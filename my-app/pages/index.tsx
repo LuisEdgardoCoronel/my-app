@@ -1,5 +1,5 @@
 'use client';
-import RandomImage from '@/components/RandomImage'
+import LazyImage from '@/components/RandomImage'
 import { Inter } from 'next/font/google'
 import { v4 as uuidv4 } from 'uuid';
 import { MouseEventHandler, useState } from 'react'
@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 
 
-type ImageItems = {id:string, url:string}
+
 
 
 
@@ -17,9 +17,9 @@ type ImageItems = {id:string, url:string}
 
 export default function Home() {
   
-  const generateID =()=> {return uuidv4();}
+  const generateID =():string=> {return uuidv4();}
 
-  const [images, setImages] = useState<ImageItems[]>([]);
+  const [images, setImages] = useState<IFoxItems[]>([]);
 
 
   const randomGenerate = ():number=>{
@@ -55,11 +55,11 @@ export default function Home() {
     >
       
 
-        <h1 className="text-3xl font-bold underline">titulo</h1>
+        <h1 className="text-3xl font-bold underline">Fox image generator</h1>
         <button onClick={addNewFox}>Add new Fox</button>
         {images.map(({id, url}) =>(
           <div key={id} className='p-4'>
-            <RandomImage image={url}/>
+            <LazyImage src={url}/>
           </div>
         ))}
       
