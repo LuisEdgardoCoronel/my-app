@@ -1,11 +1,15 @@
 import { log } from 'console';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ImgHTMLAttributes, useEffect, useRef, useState } from 'react'
+
+type LazyImageProps = {
+  src:string
+  onLazyLoad?:()=>void
+};
+type ImageNative = ImgHTMLAttributes<HTMLImageElement>
+type Props = LazyImageProps & ImageNative; //un tipo con propiedades de boton
 
 
-type Props = {image:string};
-
-
-const RandomImage = ({image}:Props):React.JSX.Element => {
+const RandomImage = ({src, ...imgProps}:Props):React.JSX.Element => {
 
   const [srcImg, setSrcImg]= useState(
     "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
@@ -23,8 +27,7 @@ useEffect(()=>{
   const observer = new IntersectionObserver((entries)=>{
     entries.forEach((entry)=>{
       if (entry.isIntersecting) {
-        console.log('hola, te veo');
-        setSrcImg(image)
+        setSrcImg(src)
       }
     });
   });
@@ -36,12 +39,19 @@ useEffect(()=>{
   return()=>{
     observer.disconnect();
   }
-},[image])
+},[src])
 
 
 
   return (
-    <img ref={node} width={320} height="auto" className='rounded bg-gray-300' src={image} />
+    <img 
+    ref={node} 
+    width={320} 
+    height="auto" 
+    className='rounded bg-gray-300' 
+    src={srcImg} 
+    {...imgProps}
+    />
   )
 }
 
