@@ -56,7 +56,7 @@ export default function Home() {
       
 
         <h1 className="text-3xl font-bold underline">Fox image generator</h1>
-        <button onClick={addNewFox}>Add new Fox</button>
+        <button className='text-red-500 border border-red-500 rounded p-1 mt-3' onClick={addNewFox}>Add new Fox</button>
         {images.map(({id, url}) =>(
           <div key={id} className='p-4'>
             <LazyImage src={url}/>
